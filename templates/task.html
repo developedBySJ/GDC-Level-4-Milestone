@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <section class="max-w-md mx-auto">
+      <h1 class="text-4xl text-center mt-4 mb-12">Task Manager</h1>
+      <a
+        href="/all_tasks"
+        class="inline-block px-4 py-2 rounded hover:bg-indigo-100 text-base mb-4 mx-2 {% if path == "all_tasks" %}bg-indigo-400 hover:bg-indigo-400{% endif %}"
+        >All Task</a
+      >
+      <a
+        href="/completed_tasks"
+        class="inline-block px-4 py-2 rounded hover:bg-indigo-100 text-base mb-4 mx-2 {% if path == "completed_tasks" %}bg-indigo-400 hover:bg-indigo-400{% endif %}"
+        >Completed Task</a
+      >
+      <a
+        href="/pending_tasks"
+        class="inline-block px-4 py-2 rounded hover:bg-indigo-100 text-base mb-4 mx-2 {% if path == "pending_tasks" %}bg-indigo-400 hover:bg-indigo-400{% endif %}"
+        >Pending Task</a
+      >
+      <form action="/add-task" method="get" class="flex items-center">
+        <input
+          type="text"
+          name="task"
+          id="task"
+          autofocus
+          class="appearance-none relative block w-full px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900 rounded-l-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+        />
+        <button
+          type="submit"
+          class="px-3 py-2 bg-indigo-500 rounded-r-md text-white"
+        >
+          Submit
+        </button>
+      </form>
+
+      <ol class="my-4 list-decimal list-inside">
+        {% for t in tasks %}
+        <li class="py-2 inline-flex w-full">
+          <p
+            class="block flex-1 text-base font-bold {% if t.is_completed %} line-through {% endif %}"
+          >
+            {{t.todo}}
+          </p>
+
+          {% if not t.is_completed %}
+          <a
+            href="/complete_task/{{forloop.counter}}"
+            class="block bg-green-400 text-green-900 py-1 px-3 rounded-l-md"
+          >
+            Mark Complete
+          </a>
+          {% endif %}
+          <a
+            href="/delete-task/{{forloop.counter}}"
+            class="block bg-red-400 text-red-900 py-1 px-3 rounded-r-md"
+          >
+            Delete</a
+          >
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </body>
+</html>
